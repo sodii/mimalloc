@@ -183,9 +183,10 @@ mi_threadid_t _mi_thread_id(void) mi_attr_noexcept {
   return _mi_prim_thread_id();
 }
 
+#if !defined(MI_MUSL_BUILTIN)
+
 // the thread-local default heap for allocation
 mi_decl_thread mi_heap_t* _mi_heap_default = (mi_heap_t*)&_mi_heap_empty;
-
 
 bool _mi_process_is_initialized = false;  // set to `true` in `mi_process_init`.
 
@@ -597,6 +598,8 @@ void _mi_heap_set_default_direct(mi_heap_t* heap)  {
   *mi_prim_tls_pthread_heap_slot() = heap;
   #elif defined(MI_TLS_PTHREAD)
   // we use _mi_heap_default_key
+  #elif defined(MI_MUSL_BUILTIN)
+  *__mimalloc_default_heap_location() = (void*)heap;
   #else
   _mi_heap_default = heap;
   #endif
