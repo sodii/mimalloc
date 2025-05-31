@@ -188,6 +188,10 @@ mi_threadid_t _mi_thread_id(void) mi_attr_noexcept {
 // the thread-local default heap for allocation
 mi_decl_thread mi_heap_t* _mi_heap_default = (mi_heap_t*)&_mi_heap_empty;
 
+#else
+
+void *__mi_heap_empty_ptr = (void*)&_mi_heap_empty;
+
 #endif
 
 bool _mi_process_is_initialized = false;  // set to `true` in `mi_process_init`.
