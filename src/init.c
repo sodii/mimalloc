@@ -792,4 +792,5 @@ void mi_cdecl _mi_process_done(void) {
   _mi_verbose_message("process done: 0x%zx\n", tld_main.thread_id);
   os_preloading = true; // don't call the C runtime anymore
 }
-
+void _mi_process_init(void) {
+}
