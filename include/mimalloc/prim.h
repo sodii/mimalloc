@@ -268,6 +268,10 @@ static inline void mi_prim_tls_slot_set(size_t slot, void* value) mi_attr_noexce
 #endif
 
 
+#if defined(MI_MUSL_BUILTIN)
+  #include "pthread_arch.h"
+  #define MI_PRIM_THREAD_ID __get_tp
+#endif
 
 // defined in `init.c`; do not use these directly
 extern mi_decl_hidden mi_decl_thread mi_heap_t* _mi_heap_default;  // default heap to allocate from
@@ -316,14 +320,6 @@ static inline mi_threadid_t __mi_prim_thread_id(void) mi_attr_noexcept {
     // apple: https://github.com/apple/darwin-xnu/blob/main/libsyscall/os/tsd.h#L36
     return (uintptr_t)mi_prim_tls_slot(0);
   #endif
-}
-
-#elif defined(MI_MUSL_BUILTIN)
-
-#include "pthread_arch.h"
-
-static inline mi_threadid_t _mi_prim_thread_id(void) mi_attr_noexcept {
-  return __get_tp();
 }
 
 #else
