@@ -140,7 +140,7 @@ typedef void* mi_nothrow_t;
   #if !defined(strdup) && !defined(MI_LIBC_MUSL)
   mi_decl_export char* strdup(const char* str)             MI_FORWARD1(mi_strdup, str)
   #endif
-  #if !defined(strndup) && (!defined(__APPLE__) || (defined(MAC_OS_X_VERSION_10_7) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_7))
+  #if !defined(strndup) && (!defined(__APPLE__) || (defined(MAC_OS_X_VERSION_10_7) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_7)) && !defined(MI_LIBC_MUSL)
   mi_decl_export char* strndup(const char* str, size_t n)  MI_FORWARD2(mi_strndup, str, n)   
   #endif
 #endif
